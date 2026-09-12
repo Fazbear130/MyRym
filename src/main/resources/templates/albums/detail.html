@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${album.title + ' — MediaLog'}">Album — MediaLog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">M</span>
+        <span>MediaLog</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a th:href="@{/}">Home</a>
+        <a class="active" th:href="@{/albums}">Albums</a>
+    </nav>
+</header>
+
+<main class="page-shell detail-page">
+    <a class="back-link" th:href="@{/albums}"><span aria-hidden="true">←</span> Back to albums</a>
+
+    <div class="flash-message" th:if="${message}" role="status">
+        <span>✓</span>
+        <p th:text="${message}">Saved.</p>
+    </div>
+
+    <section class="album-detail">
+        <div class="detail-cover">
+            <div class="detail-cover-inner">
+                <span th:text="${#strings.substring(album.title, 0, 1)}">A</span>
+                <small>MediaLog</small>
+            </div>
+        </div>
+
+        <div class="album-summary">
+            <div class="album-meta">
+                <span>Album</span>
+                <span th:text="${album.releaseYear}">1997</span>
+            </div>
+            <h1 th:text="${album.title}">Album title</h1>
+            <p class="artist-name" th:text="${album.artist.name}">Artist name</p>
+
+            <div class="rating-overview">
+                <div>
+                    <span class="metric-label">Community average</span>
+                    <p th:if="${averageRating != null}">
+                        <strong th:text="${#numbers.formatDecimal(averageRating, 1, 1)}">8.0</strong><span>/10</span>
+                    </p>
+                    <p class="empty-metric" th:unless="${averageRating != null}">No ratings yet</p>
+                </div>
+                <div>
+                    <span class="metric-label">Your score</span>
+                    <p th:if="${currentRating != null}">
+                        <strong th:text="${currentRating.score}">8</strong><span>/10</span>
+                    </p>
+                    <p class="empty-metric" th:unless="${currentRating != null}">Not rated</p>
+                </div>
+            </div>
+        </div>
+
+        <aside class="rating-panel">
+            <span class="soft-label">Demo listener</span>
+            <h2>How was this album?</h2>
+            <p class="panel-intro">Choose a whole number from 1 to 10. Saving again updates the same database row.</p>
+
+            <form class="rating-form" th:action="@{/albums/{id}/ratings(id=${album.id})}"
+                  th:object="${ratingForm}" method="post">
+                <fieldset>
+                    <legend class="sr-only">Choose a rating from 1 to 10</legend>
+                    <div class="score-grid">
+                        <label class="score-option" th:each="scoreOption : ${#numbers.sequence(1, 10)}">
+                            <input type="radio" th:field="*{score}" th:value="${scoreOption}">
+                            <span th:text="${scoreOption}">1</span>
+                        </label>
+                    </div>
+                </fieldset>
+                <p class="field-error" th:if="${#fields.hasErrors('score')}" th:errors="*{score}">Choose a score.</p>
+                <button class="button button-primary button-wide" type="submit"
+                        th:text="${currentRating == null ? 'Save rating' : 'Update rating'}">Save rating</button>
+            </form>
+
+            <form th:if="${currentRating != null}"
+                  th:action="@{/albums/{id}/ratings/delete(id=${album.id})}" method="post">
+                <button class="text-button" type="submit">Remove my rating</button>
+            </form>
+        </aside>
+    </section>
+</main>
+</body>
+</html>

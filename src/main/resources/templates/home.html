@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MediaLog — Keep your music close</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">M</span>
+        <span>MediaLog</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a class="active" th:href="@{/}">Home</a>
+        <a th:href="@{/albums}">Albums</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero page-shell">
+        <div class="hero-copy">
+            <span class="soft-label">A calm place for your music</span>
+            <h1>Remember what you listened to.</h1>
+            <p>Explore albums, keep a personal score, and slowly build a music diary that feels like yours.</p>
+            <div class="hero-actions">
+                <a class="button button-primary" th:href="@{/albums}">Explore albums</a>
+                <span class="demo-note"><span class="status-dot"></span>Demo mode · H2 database</span>
+            </div>
+        </div>
+
+        <div class="hero-visual" aria-label="A preview of the sample music collection">
+            <div class="visual-glow"></div>
+            <article class="floating-album floating-album-one">
+                <div class="mini-cover cover-mint">OK</div>
+                <div><strong>OK Computer</strong><span>Radiohead</span></div>
+            </article>
+            <article class="floating-album floating-album-two">
+                <div class="mini-cover cover-blue">TP</div>
+                <div><strong>To Pimp a Butterfly</strong><span>Kendrick Lamar</span></div>
+            </article>
+            <div class="score-bubble"><strong>1–10</strong><span>Your rating</span></div>
+        </div>
+    </section>
+
+    <section class="feature-strip page-shell" aria-label="MediaLog features">
+        <div><span class="feature-number">01</span><strong>Browse</strong><p>Open the sample catalogue.</p></div>
+        <div><span class="feature-number">02</span><strong>Rate</strong><p>Save a score to the database.</p></div>
+        <div><span class="feature-number">03</span><strong>Return</strong><p>Edit or remove it anytime.</p></div>
+    </section>
+</main>
+</body>
+</html>

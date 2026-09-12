@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Albums — MediaLog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">M</span>
+        <span>MediaLog</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a th:href="@{/}">Home</a>
+        <a class="active" th:href="@{/albums}">Albums</a>
+    </nav>
+</header>
+
+<main class="page-shell catalogue-page">
+    <section class="page-heading">
+        <div>
+            <span class="soft-label">Your starting collection</span>
+            <h1>Albums</h1>
+            <p>Choose an album to view its details and save your rating.</p>
+        </div>
+        <div class="record-count">
+            <strong th:text="${albums.size()}">4</strong>
+            <span>albums in H2</span>
+        </div>
+    </section>
+
+    <section class="album-grid" aria-label="Album catalogue">
+        <a class="album-card" th:each="album, albumStatus : ${albums}"
+           th:href="@{/albums/{id}(id=${album.id})}">
+            <div class="album-art" th:classappend="${'album-art-' + ((albumStatus.index % 4) + 1)}">
+                <span th:text="${#strings.substring(album.title, 0, 1)}">A</span>
+                <i></i>
+            </div>
+            <div class="album-card-copy">
+                <span class="album-year" th:text="${album.releaseYear}">1997</span>
+                <h2 th:text="${album.title}">Album title</h2>
+                <p th:text="${album.artist.name}">Artist</p>
+                <span class="open-album">Open album <span aria-hidden="true">→</span></span>
+            </div>
+        </a>
+    </section>
+</main>
+</body>
+</html>

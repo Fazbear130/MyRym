@@ -3,6 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### Maven ###
+target/
+.m2/
+
 ### Eclipse ###
 .apt_generated
 .classpath
